@@ -1,25 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { unified } from 'unified'
-import remarkParse from 'remark-parse'
-import remarkGfm from 'remark-gfm'
-import remarkReact from 'remark-react'
+import React, { useCallback, useState } from 'react'
+import Editor from './Components/Editor'
+import Preview from './Components/Preview'
+import './App.css'
 
-function useProcessor(props) {
-  const [Content, setContent] = useState('')
+function App() {
+  const [doc, setDoc] = useState(`# Hello World.
+  
+  * Apple
+  * Banana
+  
+  1. Bird
+  1. McHale
+  1. Parish
+  
+  | a    | b     |  c    |  d     |
+  | -    | :-    |  -:   | :-:    |
+  | Test | Test  |  Test |  Test  |  
+`)
 
-  useEffect(() => {
-    const md = unified()
-      .use(remarkParse)
-      .use(remarkGfm)
-      .use(remarkReact, React)
-      .processSync(props.text).result
+  const handleDocChange = useCallback(newDoc => {
+    setDoc(newDoc.target.value)
+  }, [])
 
-    setContent(md)
-  }, [props.text])
-
-  return Content
+  return (
+    <div className="app">
+      <Editor onChange={handleDocChange} doc={doc} />
+      <Preview doc={doc} />
+    </div>
+  )
 }
 
-export default function App() {
-  return useProcessor()
-}
+export default App
