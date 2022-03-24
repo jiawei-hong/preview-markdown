@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkGfm from 'remark-gfm'
+import remarkReact from 'remark-react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function useProcessor(props) {
+  const [Content, setContent] = useState('')
+
+  useEffect(() => {
+    const md = unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkReact, React)
+      .processSync(props.text).result
+
+    setContent(md)
+  }, [props.text])
+
+  return Content
 }
 
-export default App;
+export default function App() {
+  return useProcessor()
+}
