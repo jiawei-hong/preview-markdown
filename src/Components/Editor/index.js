@@ -1,5 +1,5 @@
 function Editor() {
-  return "editor";
+  return 'editor'
 }
 
-export default Editor;
+export default Editor

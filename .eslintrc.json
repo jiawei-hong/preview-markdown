@@ -3,15 +3,15 @@
     "es6": true
   },
   "extends": ["prettier", "eslint:recommended", "plugin:react/recommended"],
-  "parseOptions": {
+  "parserOptions": {
     "ecmaVersion": 6,
-
     "ecmaFeatures": {
       "jsx": true
     },
     "sourceType": "module",
     "requireConfigFile": false
   },
+  "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error"
   }
